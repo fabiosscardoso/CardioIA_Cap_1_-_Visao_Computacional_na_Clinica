@@ -1,9 +1,7 @@
 # CardioIA: A Nova Era da Cardiologia Inteligente
 ## Relatório Final do Projeto
 
-**Projeto Acadêmico de Classificação de Imagens Médicas com CNN**
-
-**Data:** 06 de Dezembro de 2025
+**Projeto de Classificação de Imagens Médicas com CNN**
 
 ---
 
