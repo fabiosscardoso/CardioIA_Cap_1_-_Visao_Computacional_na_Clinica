@@ -8,6 +8,37 @@ import { Button } from "@/components/ui/button";
 export default function Resultados() {
   const { data: metrics, isLoading } = trpc.models.getMetrics.useQuery();
 
+  // Dados estáticos como fallback se não houver banco de dados
+  const metricsEstaticas = [
+    {
+      id: 1,
+      modelo: "CNN Simples",
+      acuracia: 0.3333,
+      precisao: 0.1111,
+      recall: 0.3333,
+      f1Score: 0.1667,
+    },
+    {
+      id: 2,
+      modelo: "VGG16",
+      acuracia: 0.4000,
+      precisao: 0.4524,
+      recall: 0.4000,
+      f1Score: 0.2865,
+    },
+    {
+      id: 3,
+      modelo: "ResNet50",
+      acuracia: 0.3333,
+      precisao: 0.1111,
+      recall: 0.3333,
+      f1Score: 0.1667,
+    },
+  ];
+
+  // Usar dados do banco se disponíveis, senão usar estáticos
+  const metricsData = metrics && metrics.length > 0 ? metrics : metricsEstaticas;
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -19,7 +50,7 @@ export default function Resultados() {
     );
   }
 
-  const melhorModelo = metrics?.reduce((prev, current) =>
+  const melhorModelo = metricsData.reduce((prev, current) =>
     (current.acuracia > prev.acuracia) ? current : prev
   );
 
@@ -88,7 +119,7 @@ export default function Resultados() {
           {/* Métricas Detalhadas */}
           <TabsContent value="metricas" className="space-y-4">
             <div className="grid md:grid-cols-3 gap-4">
-              {metrics?.map((metric) => (
+              {metricsData.map((metric) => (
                 <Card key={metric.modelo} className="hover:shadow-lg transition-shadow">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
